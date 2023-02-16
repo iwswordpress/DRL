@@ -274,8 +274,8 @@ def do_run(
         "kappa": pull_metrics["Kappa"].loc["Mean"],
         "mcc": pull_metrics["MCC"].loc["Mean"],
     }
-    RUN_DATE = date.today()
-    # run_id,run_date,mlr_dataset, feature_set,split,tuned,setup,best,pred_accuracy, metrics_dict, accuracy, roc_auc, recall, precision, f1,kappa,mcc
+
+    # run_id,run_date,mlr_dataset,split,tuned,setup,best,pred_accuracy, metrics_dict, accuracy, roc_auc, recall, precision, f1,kappa,mcc
     project_id = 1
     data_scientist_id = 1
 
@@ -308,8 +308,6 @@ def do_run(
     print("saving RUN DETAILS to CSV", date_time_str)
     print("================================")
 
-    # 0.7109	0.7326	0.8738	0.7887	0.7476
-
     save_results(FILE, DATA)
 
     print(">>> RUN ENDED")
@@ -341,23 +339,10 @@ for i in range(len(lst_datasets)):
     run_data = f"{run_dataset} {random_sample_size}"
     runs.append(run_data)
 
-    #  randomize if tuning is applied for speed re
-    x = random.randint(0, 100)
-
-    print("RAND(100):", x)
-
-    if x > 25:
-        rand_tuned = True
-        print("====== TUNING ====== ")
-    else:
-        rand_tuned = False
-        print("======  XXX NO TUNING ====== ")
     try:
         do_run(
             dataset=run_dataset,
-            features="ALL",
             sample=random_sample_size,
-            tuned=rand_tuned,
         )
 
         count += 1
@@ -368,7 +353,6 @@ for i in range(len(lst_datasets)):
     except:
         pass
 
-print("+++++++++++++++++++++++++++")
 print("")
 print(f"{count} runs completed")
 for item in runs:
