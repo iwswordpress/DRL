@@ -272,19 +272,19 @@ def do_run(
         "mcc": pull_metrics["MCC"].loc["Mean"],
     }
 
-    # run_id,run_date,mlr_dataset,split,tuned,setup,best,pred_accuracy, metrics_dict, accuracy, roc_auc, recall, precision, f1,kappa,mcc
+    # run_id,run_date,mlr_dataset,split,tuned,setup,best,pred_accuracy,metrics_dict,accuracy,roc_auc,recall,precision,f1,kappa,mcc
+
     project_id = 1
     data_scientist_id = 1
-
     now = datetime.now()
     date_time_str = now.strftime("%Y-%m-%d %H:%M")
+
     DATA = [
         RUN_ID,
         date_time_str,
         project_id,
         data_scientist_id,
         DATASET,
-        FEATURES,
         SAMPLE,
         TUNED,
         SETUP,
