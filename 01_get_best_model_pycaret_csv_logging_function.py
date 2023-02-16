@@ -7,6 +7,7 @@ To get the string of the model we use str(best) so that we can use eval() to cre
 https://github.com/pycaret/pycaret/blob/master/tutorials/Binary%20Classification%20Tutorial%20Level%20Beginner%20-%20%20CLF101.ipynb
 """
 
+
 from numpy import random
 import random
 import uuid
@@ -51,16 +52,26 @@ from lightgbm import LGBMClassifier
 
 from utils.logging.log_to_csv import save_results
 
+print("========================")
+print("")
+print(">>> PLEASE RUN NEXT CELL -> LOAD FN")
+
+# %%
+
+# LOAD FN
+
 
 def do_run(
-    log_file="./db/pycaret_results.csv",  # default location of results
-    dataset="unknown",
-    sample=0.90,  # default train/test split
+    log_file="./db/pycaret_results.csv",
+    dataset="./datasets/mlr.csv",
+    features="ALL",
+    sample=0.95,
     tuned=True,
 ):
 
     FILE = log_file
     DATASET = dataset
+    FEATURES = features
     SAMPLE = sample
     TUNED = tuned
     SESSION_ID = 101  # Random Seed for PyCaret
@@ -93,6 +104,7 @@ def do_run(
 
     print("========================")
     print("")
+    print(">>> PLEASE RUN NEXT CELL -> PROCESS")
 
     # PROCESS
 
@@ -117,9 +129,9 @@ def do_run(
         "This function trains and evaluates the performance of all estimators available in the model library using cross-validation. The output of this function is a scoring grid with average cross-validated scores. Metrics evaluated during CV can be accessed using the pull() function. Custom metrics can be added or removed using add_metric and remove_metric function."
     )
 
-    # best = compare_models(include=["ada", "xgboost", "gbc", "rf", "lr", "et"]) # can include or exclude
+    best = compare_models(include=["ada", "xgboost", "gbc", "rf", "lr", "et"])
 
-    best = compare_models()
+    # best = compare_models()
 
     ######################
 
@@ -133,12 +145,12 @@ def do_run(
     )
 
     lr = create_model(best)
-    # tune_model(best, optimize='AUC') we can tune by a metric
-    if TUNED:  # can be turned off at top of file but best to keep as default
+    if TUNED:
+        print("!!!!!!!!!!!!!")
+        print("....tuning...")
         lr = tune_model(lr)
         print("TUNING APPLIED")
 
-    # Get metrics
     pull_metrics = pull()
     print("PULL metrics from above TUNED dataframe...")
     print("MEAN Accuracy", pull_metrics["Accuracy"].loc["Mean"])
@@ -149,7 +161,12 @@ def do_run(
     print("MEAN Kappa", pull_metrics["Kappa"].loc["Mean"])
     print("MEAN MCC", pull_metrics["MCC"].loc["Mean"])
 
+    print("========================")
+    print("")
+    print(">>> PLEASE RUN NEXT CELL -> FINALIZE")
+
     # FINALIZE_MODEL
+
     # This function trains a given model on the entire dataset including the hold-out set.
 
     print(">>> Finalizing model...")
@@ -162,8 +179,9 @@ def do_run(
 
     print("========================")
     print("")
+    print(">>> PLEASE RUN NEXT CELL -> EVALUATE")
 
-    # We can save model
+    # EVALUATE
     if SAVE_MODEL:
         # SAVE THE MODEL
         print(">>> SAVING best model")
@@ -179,12 +197,25 @@ def do_run(
     print("")
     evaluate_model(best)
 
+    # tune_model(best, optimize='AUC')
+
     # plot_model(lr, plot='confusion_matrix', plot_kwargs={'percent': True})
 
     print("========================")
     print("")
+    print(">>> PLEASE RUN NEXT CELL -> PREDICT")
 
     # GET METRICS
+
+    # print('================================')
+    # print('Using best model, create a model and rerun to be able to pull out the dataframe from')
+
+    # print('========================')
+    # print('')
+    # print('>>> PLEASE RUN NEXT CELL -> PREDICT')
+
+    # PREDICT MODEL
+
     print("================================")
     print("predict_model(best, test_set=HOLDOUT_SET)")
     print(
@@ -208,11 +239,9 @@ def do_run(
     # SAVE holdout_correct
 
     holdout_correct = round(results["correct"].sum() / len(results["correct"]), 2)
-
     ######################
-
-    # Get HOLDOUT_ACCURACY
     print("================================")
+    print("Logging to CSV...")
     print(
         round(results["correct"].sum() / len(results["correct"]), 2) * 100,
         "%",
@@ -223,8 +252,12 @@ def do_run(
 
     print("========================")
     print("")
+    print(">>> PLEASE RUN NEXT CELL -> LOGGING")
+
+    # LOGGING
 
     lr = create_model(best)
+    # dashboard(lr)
 
     pull_metrics = pull()
     print("PULL metrics from above dataframe...")
@@ -246,21 +279,20 @@ def do_run(
         "kappa": pull_metrics["Kappa"].loc["Mean"],
         "mcc": pull_metrics["MCC"].loc["Mean"],
     }
-
-    # RUN_DATE = date.today()
-    # run_id,run_date,mlr_dataset, split,tuned,setup,best,pred_accuracy, metrics_dict, accuracy, roc_auc, recall, precision, f1,kappa,mcc
-
+    RUN_DATE = date.today()
+    # run_id,run_date,mlr_dataset, feature_set,split,tuned,setup,best,pred_accuracy, metrics_dict, accuracy, roc_auc, recall, precision, f1,kappa,mcc
     project_id = 1
     data_scientist_id = 1
+
     now = datetime.now()
     date_time_str = now.strftime("%Y-%m-%d %H:%M")
-
     DATA = [
         RUN_ID,
         date_time_str,
         project_id,
         data_scientist_id,
         DATASET,
+        FEATURES,
         SAMPLE,
         TUNED,
         SETUP,
@@ -281,15 +313,21 @@ def do_run(
     print("saving RUN DETAILS to CSV", date_time_str)
     print("================================")
 
+    # 0.7109	0.7326	0.8738	0.7887	0.7476
+
     save_results(FILE, DATA)
 
     print("***************************")
     print(">>> RUN ENDED")
 
 
+print("========================")
+print("")
+print(">>> PLEASE RUN NEXT CELL -> BATCH")
+
 # %%
 
-# BDO RUN
+# BATCH
 
 count = 0
 runs = []
