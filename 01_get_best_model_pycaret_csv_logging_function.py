@@ -124,14 +124,14 @@ def do_run(
         "This function trains and evaluates the performance of all estimators available in the model library using cross-validation. The output of this function is a scoring grid with average cross-validated scores. Metrics evaluated during CV can be accessed using the pull() function. Custom metrics can be added or removed using add_metric and remove_metric function."
     )
 
-    best = compare_models(include=["ada", "xgboost", "gbc", "rf", "lr", "et"])
+    # best = compare_models(include=["ada", "xgboost", "gbc", "rf", "lr", "et"])
 
-    # best = compare_models()
+    best = compare_models()
 
     ######################
 
     #  to run eval on the best model we need to ensure it is a string as best is reference to a class.
-    str_best = str(best)
+
     print("BEST model and hyperparameters are:")
     print(best)
     print("================================")
@@ -141,7 +141,6 @@ def do_run(
 
     lr = create_model(best)
     if TUNED:
-        print("!!!!!!!!!!!!!")
         print("....tuning...")
         lr = tune_model(lr)
         print("TUNING APPLIED")
@@ -193,8 +192,6 @@ def do_run(
     evaluate_model(best)
 
     # tune_model(best, optimize='AUC')
-
-    # plot_model(lr, plot='confusion_matrix', plot_kwargs={'percent': True})
 
     print("========================")
     print("")
