@@ -312,7 +312,6 @@ def do_run(
 
     save_results(FILE, DATA)
 
-    print("***************************")
     print(">>> RUN ENDED")
 
 
