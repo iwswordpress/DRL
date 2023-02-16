@@ -8,9 +8,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
-import uuid
 import warnings
-import random
+
 
 warnings.filterwarnings("ignore")
 
@@ -32,7 +31,8 @@ def create_ensemble_gene_importance(
     do_scaling=True,
     do_stratify=True,
     split=0.15,
-    rn_state=4098,
+    rnd_state_hyper=4098,
+    rnd_state_split=101,
 ):
     # RUN_ID = str(uuid.uuid4()) replace
     # HYPERPARAMETER_RUN_ID links to pycaret RUN_ID from where we got hyperparameters
@@ -53,12 +53,13 @@ def create_ensemble_gene_importance(
 
     if do_stratify:
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=split, random_state=rn_state, stratify=y
+            X, y, test_size=split, random_state=rnd_state_split, stratify=y
         )
     else:
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=split, random_state=rn_state
+            X, y, test_size=split, random_state=rnd_state_split
         )
+
     cols_features = X_train.columns
 
     scaler = StandardScaler()
@@ -99,9 +100,7 @@ def create_ensemble_gene_importance(
     df_ensemble_rated[key_rank] = seq
     df_ensemble_rated[key_rank] = df_ensemble_rated[key_rank] + 1
     df_ensemble_rated.sample()
-    output_filename = (
-        f"./csvs/gene_importances/{model_type.upper()}_RANKED_{rn_state}.csv"
-    )
+    output_filename = f"./csvs/gene_importances/{model_type.upper()}_RANKED_{rnd_state_hyper}_{rnd_state_split}.csv"
     print(output_filename)
     df_ensemble_rated.to_csv(output_filename, index=False)
 
@@ -109,7 +108,28 @@ def create_ensemble_gene_importance(
 
 
 # %%
-RND_STATE = random.randint(1, 100000)
+RND_STATE_HYPER = 1113
+RND_STATE_SPLIT = 101
+
+# %%
+model = AdaBoostClassifier(
+    algorithm="SAMME.R",
+    learning_rate=1.0,
+    n_estimators=50,
+    random_state=RND_STATE_HYPER,
+)
+create_ensemble_gene_importance(
+    model,
+    "ada",
+    dataset="RED_ADA_RANKED_101.csv",
+    do_scaling=True,
+    do_stratify=True,
+    split=0.10,
+    rnd_state_hyper=RND_STATE_HYPER,
+    rnd_state_split=RND_STATE_SPLIT,
+)
+
+# %%
 model = RandomForestClassifier(
     bootstrap=True,
     ccp_alpha=0.0,
@@ -126,37 +146,17 @@ model = RandomForestClassifier(
     n_estimators=100,
     n_jobs=-1,
     oob_score=False,
-    random_state=RND_STATE,
+    random_state=RND_STATE_HYPER,
     verbose=0,
     warm_start=False,
 )
 create_ensemble_gene_importance(
     model,
     "ran",
-    dataset="mlr.csv",
+    dataset="RED_ADA_RANKED_101.csv",
     do_scaling=True,
     do_stratify=True,
-    split=0.15,
-    rn_state=RND_STATE,
+    split=0.10,
+    rnd_state_hyper=RND_STATE_HYPER,
+    rnd_state_splitr=RND_STATE_SPLIT,
 )
-
-# %%
-
-#  ORIGINAL and saved as f2f88
-# model = AdaBoostClassifier(
-#     algorithm='SAMME.R', learning_rate=1.0, n_estimators=50, random_state=1113)
-RND_STATE = random.randint(1, 100000)
-model = AdaBoostClassifier(
-    algorithm="SAMME.R", learning_rate=1.0, n_estimators=75, random_state=RND_STATE
-)
-create_ensemble_gene_importance(
-    model,
-    "ada",
-    dataset="mlr.csv",
-    do_scaling=True,
-    do_stratify=True,
-    split=0.15,
-    rn_state=RND_STATE,
-)
-
-# %%
