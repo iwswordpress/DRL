@@ -54,11 +54,6 @@ from utils.logging.log_to_csv import save_results
 
 print("========================")
 print("")
-print(">>> PLEASE RUN NEXT CELL -> LOAD FN")
-
-# %%
-
-# LOAD FN
 
 
 def do_run(
