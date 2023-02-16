@@ -139,10 +139,10 @@ def do_run(
         "Using best model, create a model and rerun to be able to pull out the dataframe from"
     )
 
-    lr = create_model(best)
+    model = create_model(best)
     if TUNED:
         print("....tuning...")
-        lr = tune_model(lr)
+        model = tune_model(model)
         print("TUNING APPLIED")
 
     pull_metrics = pull()
@@ -246,10 +246,8 @@ def do_run(
     print("")
     print(">>> PLEASE RUN NEXT CELL -> LOGGING")
 
-    # LOGGING
-
-    lr = create_model(best)
-    # dashboard(lr)
+    # This is needed to get metrics with pull()
+    model = create_model(best)
 
     pull_metrics = pull()
     print("PULL metrics from above dataframe...")
