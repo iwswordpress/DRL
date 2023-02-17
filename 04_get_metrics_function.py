@@ -225,3 +225,17 @@ run_metrics_test(
 )
 
 # %%
+
+# %%
+
+run_metrics_test(
+    model_id="frde99-fg78yt",
+    model_type="log",
+    dataset="./datasets/RED_ADA_RANKED_101.csv",
+    split=0.1,
+    rnd_num_split=22,
+    rnd_num_hyper=65,
+    do_scaler=True,
+)
+
+# %%
