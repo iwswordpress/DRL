@@ -84,33 +84,20 @@ def run_metrics_test(
         X_test = scaler.transform(X_test)
 
     if model_type == "ada":
-        str_model = 'AdaBoostClassifier(algorithm="SAMME.R",learning_rate=1.0,n_estimators=50,random_state=rnd_num_hyper)'
+        # we used eval so that we can load in the model from db and also vary random_state
+        str_model = f'AdaBoostClassifier(algorithm="SAMME.R",learning_rate=1.0,n_estimators=50,random_state={rnd_num_hyper})'
+        print("str_model", str_model)
         model = eval(str_model)
 
     if model_type == "log":
-        model = LogisticRegression(max_iter=1000)
+        str_model = f"LogisticRegression(max_iter=1000)"
+        print("str_model", str_model)
+        model = eval(str_model)
 
     if model_type == "ran":
-        model = RandomForestClassifier(
-            bootstrap=True,
-            ccp_alpha=0.0,
-            class_weight=None,
-            criterion="gini",
-            max_depth=None,
-            max_features="sqrt",
-            max_leaf_nodes=None,
-            max_samples=None,
-            min_impurity_decrease=0.0,
-            min_samples_leaf=1,
-            min_samples_split=2,
-            min_weight_fraction_leaf=0.0,
-            n_estimators=100,
-            n_jobs=-1,
-            oob_score=False,
-            random_state=rnd_num_hyper,
-            verbose=0,
-            warm_start=False,
-        )
+        str_model = f'RandomForestClassifier(bootstrap=True, ccp_alpha=0.0, class_weight=None,criterion="gini",max_depth=None, max_features="sqrt",max_leaf_nodes=None,max_samples=None,min_impurity_decrease=0.0,min_samples_leaf=1,min_samples_split=2,min_weight_fraction_leaf=0.0,n_estimators=100,n_jobs=-1,oob_score=False,random_state={rnd_num_hyper},verbose=0,warm_start=False )'
+        print("str_model", str_model)
+        model = eval(str_model)
 
     model.fit(X_train, y_train)
 
@@ -228,6 +215,7 @@ run_metrics_test(
 
 # %%
 run_metrics_test(
+    model_id="lyh0d9-fg78yt",
     model_type="ran",
     dataset="./datasets/RED_RAN_RANKED_101.csv",
     split=0.1,
