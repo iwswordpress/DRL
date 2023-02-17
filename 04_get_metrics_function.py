@@ -84,12 +84,9 @@ def run_metrics_test(
         X_test = scaler.transform(X_test)
 
     if model_type == "ada":
-        model = AdaBoostClassifier(
-            algorithm="SAMME.R",
-            learning_rate=1.0,
-            n_estimators=50,
-            random_state=rnd_num_hyper,
-        )
+        str_model = 'AdaBoostClassifier(algorithm="SAMME.R",learning_rate=1.0,n_estimators=50,random_state=rnd_num_hyper)'
+        model = eval(str_model)
+
     if model_type == "log":
         model = LogisticRegression(max_iter=1000)
 
