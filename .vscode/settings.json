@@ -1,9 +1,6 @@
 {
   "python.terminal.activateEnvironment": true,
-<<<<<<< HEAD
-  "terminal.integrated.fontSize" :10,
-=======
->>>>>>> 0bdbe0bb34e0b416a45303e7e5592baeaf75e1fc
+  "terminal.integrated.fontSize": 10,
   "workbench.tree.indent": 20,
   "editor.formatOnSave": true,
   "editor.wordWrapColumn": 200,
@@ -31,58 +28,6 @@
   ],
   "indentRainbow.errorColor": "rgba(128,32,32,0.6)",
   "indentRainbow.tabmixColor": "rgba(128,32,96,0.6)",
-<<<<<<< HEAD
-=======
-  "better-comments.tags": [
-    {
-      "tag": "!",
-      "color": "#FFA500",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "#ffffff",
-      "bold": true,
-      "italic": false
-    },
-    {
-      "tag": "?",
-      "color": "#2196f3",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "#ffffff",
-      "bold": true,
-      "italic": false,
-      "fontSize": "44px"
-    },
-    {
-      "tag": "//",
-      "color": "##2196F3",
-      "strikethrough": true,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": true,
-      "italic": false
-    },
-    {
-      "tag": "todo",
-      "color": "#2196F3",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": true,
-      "italic": false,
-      "fontSize": "32px"
-    },
-    {
-      "tag": "*",
-      "color": "#00FF00",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "#ffffff",
-      "bold": true,
-      "italic": false
-    }
-  ],
->>>>>>> 0bdbe0bb34e0b416a45303e7e5592baeaf75e1fc
   "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "comments": "#d4922f"
@@ -90,10 +35,6 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-<<<<<<< HEAD
-=======
-  "security.workspace.trust.untrustedFiles": "open",
->>>>>>> 0bdbe0bb34e0b416a45303e7e5592baeaf75e1fc
   "editor.largeFileOptimizations": false,
   "git.enableSmartCommit": true,
   "notebook.cellToolbarLocation": {
@@ -111,17 +52,8 @@
   "editor.formatOnType": true,
   "workbench.colorTheme": "One Dark Pro Darker",
   "[pip-requirements]": {},
-<<<<<<< HEAD
   "window.zoomLevel": 1,
   "editor.mouseWheelZoom": true,
-=======
-  "window.zoomLevel": 3,
-  "editor.mouseWheelZoom": true,
-  "jupyter.widgetScriptSources": [
-    "jsdelivr.com",
-    "unpkg.com"
-  ],
->>>>>>> 0bdbe0bb34e0b416a45303e7e5592baeaf75e1fc
   "redhat.telemetry.enabled": true,
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
@@ -129,9 +61,5 @@
   "workbench.editorAssociations": {
     "*.exe": "default"
   },
-<<<<<<< HEAD
   "editor.fontSize": 12
-=======
-  "editor.fontSize": 10
->>>>>>> 0bdbe0bb34e0b416a45303e7e5592baeaf75e1fc
 }
