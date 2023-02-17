@@ -40,7 +40,7 @@ def save_test_results(file, data):
 
 
 def run_metrics_test(
-    model="ada",
+    model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
     rnd_num_split=101,
@@ -82,17 +82,17 @@ def run_metrics_test(
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.transform(X_test)
 
-    if model == "ada":
+    if model_type == "ada":
         model = AdaBoostClassifier(
             algorithm="SAMME.R",
             learning_rate=1.0,
             n_estimators=50,
             random_state=rnd_num_hyper,
         )
-    if model == "log":
+    if model_type == "log":
         model = LogisticRegression(max_iter=1000)
 
-    if model == "ran":
+    if model_type == "ran":
         model = RandomForestClassifier(
             bootstrap=True,
             ccp_alpha=0.0,
@@ -166,7 +166,7 @@ def run_metrics_test(
         RUN_ID,
         date_time_str,
         dataset,
-        model,
+        model_type,
         split,
         do_scaler,
         rnd_num_split,
@@ -192,7 +192,7 @@ def run_metrics_test(
 #  The rand we pass in is for train/test/split random_state so we would need to change the random_state for the model manually inside the function.
 
 run_metrics_test(
-    model="ada",
+    model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
     rnd_num_split=101,
@@ -203,39 +203,35 @@ run_metrics_test(
 
 # %%
 
-# run_metrics_test()
-
-# 0.2 101  5555  -> 0.79
-# 0.1 101  5555  -> 0.94
-# 0.1 101  5555  -> 0.82
-# 0.1 5555 5555  -> 0.65
-# 0.1 101  22    -> 0.82
-# 0.2 101  22    -> 0.67
-# 0.2 3    22    -> 0.67
-# 0.1 3    22    -> 0.82
-
 run_metrics_test(
-    model="ada",
+    model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
-    rnd_num_split=101,
-    rnd_num_hyper=5101,
+    rnd_num_split=22,
+    rnd_num_hyper=65,
     do_scaler=True,
 )
 
-print("")
-print("")
-print("========== RED_RAN_RANKED_101.csv ==========")
-print("")
-print("")
+# %%
+
 run_metrics_test(
-    model="ran",
+    model_type="ran",
     dataset="./datasets/RED_RAN_RANKED_101.csv",
     split=0.1,
-    rand_train_test_split=101,
+    rnd_num_split=101,
     rnd_num_hyper=5555,
     do_scaler=True,
 )
 
+
+# %%
+run_metrics_test(
+    model_type="ran",
+    dataset="./datasets/RED_RAN_RANKED_101.csv",
+    split=0.1,
+    rnd_num_split=55,
+    rnd_num_hyper=5520155,
+    do_scaler=True,
+)
 
 # %%
