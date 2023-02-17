@@ -40,6 +40,7 @@ def save_test_results(file, data):
 
 
 def run_metrics_test(
+    model_id,
     model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
@@ -160,10 +161,11 @@ def run_metrics_test(
     date_time_str = now.strftime("%Y-%m-%d %H:%M")
     FILE = "./csvs/test_results.csv"
 
-    RUN_ID = str(uuid.uuid4())
+    test_id = str(uuid.uuid4())
 
     DATA = [
-        RUN_ID,
+        test_id,
+        model_id,
         date_time_str,
         dataset,
         model_type,
@@ -174,7 +176,7 @@ def run_metrics_test(
         holdout_correct,
     ]
 
-    print("RUN_ID:", RUN_ID)
+    print("TEST_ID:", test_id)
     print("================================")
     print("saving RUN DETAILS to CSV", date_time_str)
     print("DATASET", dataset)
@@ -192,6 +194,7 @@ def run_metrics_test(
 #  The rand we pass in is for train/test/split random_state so we would need to change the random_state for the model manually inside the function.
 
 run_metrics_test(
+    model_id="dfe999-fg78yt",
     model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
@@ -204,6 +207,7 @@ run_metrics_test(
 # %%
 
 run_metrics_test(
+    model_id="drde99-fg78yt",
     model_type="ada",
     dataset="./datasets/RED_ADA_RANKED_101.csv",
     split=0.1,
@@ -215,6 +219,7 @@ run_metrics_test(
 # %%
 
 run_metrics_test(
+    model_id="kl90d9-fg78yt",
     model_type="ran",
     dataset="./datasets/RED_RAN_RANKED_101.csv",
     split=0.1,
