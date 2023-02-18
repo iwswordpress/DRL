@@ -1,5 +1,23 @@
 ![Explorer](./_images/explorer.png)
 
+## CSVS
+
+Used to store csv output data files.
+
+## DATASETS
+
+- mlr_spearman.csv has all wrangled features and uses sperman correlation.
+- mlr.csv is a shortcut for mlr_spearman.
+- RED\_ has any reduced reatures dataset but look in reduced_features_mlr_datasets for README.md for naming conventions. One can store all RED there but a few kept in root for testing code with much smaller dataset for speed reasons.
+
+## DB
+
+This is for database files. pycaret_results.csv also stored here as this is a core data file but cpuld be stored in csvs.
+
+## UTILS
+
+Any util tools stored here.
+
 ## STEP 01: START - get best hyperparameters and model
 
 Start with <font size="3">**01_get_best_model_pycaret_csv_logging_function.py**</font> which takes a dataset and can be run in loop.
