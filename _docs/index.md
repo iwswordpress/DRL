@@ -29,3 +29,18 @@ We can run the modelling again on a reduced feature set based on the importances
 <font size="3">**04_get_metrics_function.py**</font> gets metrics as well as HOLDOUT\_ ACCURACY for a given model_id dereived from <font size="3">**db/pycaret_results.csv**</font>. It will diaply CM etc and then logs TEST_ID, model_id, accuracy to <font size="3">**csvs/test_results.csv**</font>.
 
 By enabling rnd_num_split and rnd_num_hyper to be passed in, we can examine the effect of these random numbers.
+
+## STEP 5: CREATE GENE IMPORTANCES
+
+For a given model, <font size="3">**05_create_gene_importance_ensemble_log.py**</font> it runs model with a RND_STATE_HYPER, logs the RND_STATE_HYPER used in <font size="3">**csvs/gene_importances/rnd_used.csv**</font>. This prevents the double recording of gene importances, although witha range of 1 to 4_000_000_000 by default the likelihood is minimal but would be important for smaller random number range.
+
+It then logs the gene importances based on model and code. AdaBoost has 100(give or take) non-zero values, so cut off point is straightfowrad. It will be different for RandFor, LogReg etc.
+
+## STEP 6: GENE OCCURRENCE TOTALS
+
+<font size="3">**0count_genes.py**</font> gets the total number of random numbers used from <font size="3">**csvs/gene_importances/rnd_used.csv**</font> and the value counts of each gene from <font size="3">**csvs/gene_importances/genes.csv**</font>.
+
+TODO?
+
+- add \_00X to end of rund_used and genes so that we have a job reference and can hae multiple jobs
+- calculate holdout accuracy for each run and log that to a rnd_accuracy file or include in rnd_used...
