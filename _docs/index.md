@@ -60,5 +60,5 @@ It then logs the gene importances based on model and code. AdaBoost has 100(give
 
 TODO?
 
-- add \_00X to end of rund_used and genes so that we have a job reference and can hae multiple jobs
+- add \_00X to end of rnd_used and genes so that we have a job reference and can hae multiple jobs
 - calculate holdout accuracy for each run and log that to a rnd_accuracy file or include in rnd_used...
