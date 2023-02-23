@@ -1,5 +1,9 @@
 ![Explorer](./_images/explorer.png)
 
+folders csvs, db and datasets would need to be added in local version as files reference these.
+
+they are not uploaded as they have data - working on how to upload a gitignored folder but upload empty folder...
+
 ## CSVS
 
 Used to store csv output data files.
